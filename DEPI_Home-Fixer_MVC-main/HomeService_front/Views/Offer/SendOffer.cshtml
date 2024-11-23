@@ -1,0 +1,57 @@
+﻿@model AddOfferVM
+@{
+    ViewData["Title"] = "SendOffer";
+    Layout = "~/Views/Shared/_TechnicianLayout.cshtml";
+}
+
+<div class="container py-5">
+    <main>
+        <div class="py-5 text-center">
+            <div class="section-title">
+                <h2>Send Offer</h2>
+            </div>
+        </div>
+        <div class="row g-5 mx-auto">
+            <div class="col-md-7 col-lg-8 mx-auto">
+                <form class="form-card" asp-action="SendOffer" asp-controller="Offer" novalidate>
+
+                    <input type="number" asp-for="@Model.RequestID" hidden />
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="Details" class="form-label">Details</label>
+                            <textarea id="w3review"
+                                      asp-for="@Model.OfferDetails"
+                                      class="form-control"
+                                      rows="7"
+                                      cols="50">
+                  </textarea>
+                            <span asp-validation-for="@Model.OfferDetails" class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="name">Price</label>
+                            <input type="text"
+                                   asp-for="@Model.Price"
+                                   class="form-control" />
+                            <span asp-validation-for="@Model.Price" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="Date">visit Date</label>
+                            <input type="datetime-local"
+                                   asp-for="@Model.VisitDate"
+                                   class="form-control" />
+                            <span asp-validation-for="@Model.VisitDate" class="text-danger"></span>
+
+                        </div>
+
+                    </div>
+                    <hr class="my-4" />
+                    <button type="submit" class="main-btn">Submit Offer</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+</div>

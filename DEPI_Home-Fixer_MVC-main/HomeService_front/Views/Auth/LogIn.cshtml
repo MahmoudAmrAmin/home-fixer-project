@@ -1,0 +1,44 @@
+﻿@model LogInVm
+
+@{
+    ViewData["Title"] = "LogIn";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="col-8">
+        @if (ViewData["Message"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show text-center text-dark" role="alert">
+                @ViewData["Message"] 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <form class="form-card" asp-action="LogIn" asp-controller="Auth">
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="Email"
+                       class="form-control"
+                       asp-for="@Model.Email" />
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+
+
+            </div>
+            <div class="mb-3">
+                <label for="password">Password</label>
+                <input type="password"
+                       class="form-control"
+                       asp-for="@Model.Password"
+                    />
+                <span asp-validation-for="@Model.Password" class="text-danger"></span> 
+            </div>
+            <div class="text-end">
+                Do not Have an Account?
+                <a asp-action="RegisterUser" asp-controller="Auth" style="color:#47b2e4">Register</a>
+            </div>
+            <button type="submit" class="main-btn">LogIn</button>
+        </form>
+    </div>
+</div>
+

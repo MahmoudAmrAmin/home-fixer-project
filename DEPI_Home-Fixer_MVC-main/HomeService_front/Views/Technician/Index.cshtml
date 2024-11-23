@@ -1,0 +1,94 @@
+﻿@model TechnicianVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="col-8">
+        <form class="form-card">
+            <div>
+                <h3>Profile</h3>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="firstName"
+                           placeholder="Enter your first name"
+                           asp-for="@Model.FirstName" />
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="lastName"
+                           placeholder="Enter your last name"
+                           required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email"
+                       class="form-control"
+                       id="email"
+                       placeholder="Enter your email"
+                       required />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Phone Number</label>
+                <input type="password"
+                       class="form-control"
+                       id="password"
+                       placeholder="Enter your phone"
+                       required />
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               placeholder="Enter your password"
+                               required />
+                    </div>
+                </div>
+
+                <div class="mb-3 col-6">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password"
+                           class="form-control"
+                           id="confirmPassword"
+                           placeholder="Confirm your password"
+                           required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="specialization" class="form-label">Specialization</label>
+                <select class="form-select" id="specialization" required>
+                    <option value="">Select Specialization...</option>
+                    <option value="hvac">
+                        HVAC (Heating, Ventilation, and Air Conditioning)
+                    </option>
+                    <option value="electrical">Electrical</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="mechanical">Mechanical</option>
+                    <option value="itSupport">IT Support</option>
+                    <option value="general">General Maintenance</option>
+                </select>
+                <div class="invalid-feedback">Please select your specialization.</div>
+            </div>
+            <button type="submit" class="main-btn">Register</button>
+        </form>
+    </div>
+</div>
+

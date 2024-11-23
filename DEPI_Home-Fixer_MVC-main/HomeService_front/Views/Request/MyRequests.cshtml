@@ -1,0 +1,103 @@
+﻿@model PageData<RequestVM>
+@{
+    ViewData["Title"] = "MyRequests";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<div class="container-fluid" style="margin-top:78px">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show text-center text-dark" role="alert">
+            @TempData["Message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="row flex-nowrap">
+        <div class="col">
+
+
+            @if (Model.Data.Any())
+            {
+                <div class="container">
+                    <div class="row">
+                        @foreach (var request in Model.Data)
+                        {
+                            <div class="col-sm-12 col-md-6 col-lg-6 py-2">
+                                <div class="card" style="border-color:@(request.Status == "Pending"? "red" : "green")">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="card-title">@request.UserFullName</h5>
+                                            <span class="text-secondary">
+                                                @request.CityName
+                                                <a asp-action="DeleteRequest" asp-controller="Request" asp-route-requestId="@request.Id">
+
+                                                    <i class="fa-solid fa-x px-1 text-danger"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <!-- Ellipsis for text overflow -->
+                                        <p class="card-text text-ellipsis"
+                                           style="height: 76px; overflow: hidden">
+                                            @request.Description
+                                        </p>
+
+                                        <!-- Adding the date at the bottom right -->
+                                        <div>
+                                            Requested Technician: @request.SpecializationName
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-3">
+
+                                            <small class="text-muted text-start">@request.Status</small>
+                                            
+                                            <small class="text-muted">@FormatterHelper.GetFormatedDate(request.RequestedAt) </small>
+                                        </div>
+
+                                        <!-- Adding buttons at the bottom right -->
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <a asp-action="OffersForRequest" asp-controller="Offer" asp-route-requestID="@request.Id" class="btn btn-success" data-mdb-ripple-init>See Offers</a>
+                                            <a asp-action="EditRequest"
+                                               asp-controller="Request"
+                                               asp-route-requestId="@request.Id"
+                                               class="btn btn-primary"
+                                               data-mdb-ripple-init>Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center text-dark" role="alert">
+                    There is no Requests!!
+                </div>
+            }
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                        @* <a class="page-link" href="@Url.Action("YourAction", new { page = currentPage - 1 })" tabindex="-1">Previous</a> *@
+                    </li>
+
+                    @for (var i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link" asp-action="MyRequests" asp-controller="Request" asp-route-pageNo="@i">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(Model.PageNumber == Model.TotalRecords ? "disabled" : "")">
+                        @* <a class="page-link" href="@Url.Action("YourAction", new { page = currentPage + 1 })">Next</a> *@
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+

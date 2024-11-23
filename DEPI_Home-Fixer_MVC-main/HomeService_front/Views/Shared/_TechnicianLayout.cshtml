@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <header id="header" class="fixed-top" style="background: #37517e">
+            <div class="container d-flex align-items-center">
+                <h1 class="logo me-auto"><a asp-action="Index" asp-controller="Home">Home Fixer</a></h1>
+                <nav id="navbar" class="navbar">
+                    <ul>
+                        <li><a class="nav-link scrollto active" asp-action="Index" asp-controller="Request">Requests</a></li>
+
+                        <li><a class="nav-link scrollto" asp-action="TechnicianAcceptedOffer" asp-controller="Offer">Accepted Offers</a></li>
+                        <li><a class="getstarted scrollto" asp-action="LogOut" asp-controller="Auth">LogOut</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        @RenderBody()
+    </div>
+</body>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/site.js"></script>
+</html>

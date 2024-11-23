@@ -1,0 +1,72 @@
+﻿@model PageData<AcceptedOfferVM>
+
+@{
+    ViewData["Title"] = "TechnicianAcceptedOffer";
+    Layout = "~/Views/Shared/_TechnicianLayout.cshtml";
+}
+
+
+<div class="container-fluid" style="margin-top:80px">
+    @if (Model.Data.Any())
+    {
+        <div class="container">
+            <div class="row">
+                @foreach (var offer in Model.Data)
+                {
+                    <div class="col-sm-12 col-md-6 col-lg-6 py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="col"> <strong>Client Name :</strong> @offer.Name</div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="col"> <strong>Client Phone :</strong> @offer.PhoneNumber</div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="col"> <strong>Price :</strong> @offer.Price</div>
+                                </div>
+
+                                <strong>Details :</strong>
+                                <p class="card-text text-ellipsis"
+                                   style="height: 76px; overflow: hidden">
+                                    @offer.OfferDetails
+                                </p>
+
+                                <!-- Adding the date at the bottom right -->
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div></div>
+                                    <small class="text-muted">Visited Date: @FormatterHelper.GetFormatedDate(offer.VisitDate)</small>
+                                </div>
+
+                                <!-- Adding buttons at the bottom right -->
+                                <div class="d-flex justify-content-between mt-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center text-dark" role="alert">
+            There is no Accepted Offers!!
+        </div>
+    }
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            @for (var i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+            {
+                <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                    <a class="page-link" asp-action="MyRequests" asp-controller="Request" asp-route-pageNo="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+
+</div>
+

@@ -1,0 +1,114 @@
+﻿@model RequestIndexVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_TechnicianLayout.cshtml";
+}
+
+
+
+<div class="container-fluid" style="margin-top:78px">
+    <div class="row flex-nowrap">
+        <div class="col">
+            <nav class="navbar" style="background-color: #37517e; height: 77px">
+                <div class="container-fluid">
+                    <!-- Use flexbox to align items beside each other -->
+                    <div class="d-flex justify-content-between w-100">
+                        <a class="navbar-brand text-white">@(Model.SpecializationName) (@Model.Data.TotalRecords) </a>
+                        <!-- Right side: Search form -->
+                        <form class="text-center d-flex" asp-action="Index" asp-controller="Request" role="search">
+                            <div class="form-group">
+                                <select name="sortByCity" class="form-control">
+                                    <option value="">-- Sort by --</option>
+                                    <option value="true">City Ascending</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select name="cityId" asp-items="@ViewBag.Cities" class="form-control">
+                                    <option value="">-- Select City --</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="main-btn">Search</button>
+
+                        </form>
+                        <a class="" type="submit" asp-action="Index" asp-controller="Request">
+                            Clear Search
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            @if (Model.Data.Data.Any())
+            {
+                <div class="container">
+                    <div class="row">
+                        @foreach (var request in Model.Data.Data)
+                        {
+                            <div class="col-sm-12 col-md-6 col-lg-6 py-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="card-title">@request.UserFullName</h5>
+                                            <span class="text-secondary">@request.CityName</span>
+                                        </div>
+                                        <!-- Ellipsis for text overflow -->
+                                        <p class="card-text text-ellipsis"
+                                           style="height: 76px; overflow: hidden">
+                                            @request.Description
+                                        </p>
+
+                                        <!-- Adding the date at the bottom right -->
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <div></div>
+                                            <small class="text-muted">@FormatterHelper.GetFormatedDate(request.RequestedAt)</small>
+                                        </div>
+
+                                        <!-- Adding buttons at the bottom right -->
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <a asp-action="SendOffer" asp-controller="Offer" asp-route-requestID="@request.Id" class="btn btn-success" data-mdb-ripple-init>Apply</a>
+                                            <a asp-action="RequestDetails"
+                                               asp-controller="Request"
+                                               asp-route-id="@request.Id"
+                                               class="btn btn-primary"
+                                               data-mdb-ripple-init>View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center text-dark" role="alert">
+                    There is no Requests in this Specialization!!
+                </div>
+            }
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item @(Model.Data.PageNumber == 1 ? "disabled" : "")">
+                        @* <a class="page-link" href="@Url.Action("YourAction", new { page = currentPage - 1 })" tabindex="-1">Previous</a> *@
+                    </li>
+
+                    @for (var i = 1; i <= (int)Math.Ceiling((double)Model.Data.TotalRecords / Model.Data.PageSize); i++)
+                    {
+                        <li class="page-item @(Model.Data.PageNumber == i ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-controller="Request" asp-route-id="@Model.SpecializationId" asp-route-pageSize="1" asp-route-pageNo="@i" asp-route-needCount="true">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(Model.Data.PageNumber == Model.Data.TotalRecords ? "disabled" : "")">
+                        @* <a class="page-link" href="@Url.Action("YourAction", new { page = currentPage + 1 })">Next</a> *@
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+

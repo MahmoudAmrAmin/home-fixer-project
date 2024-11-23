@@ -1,0 +1,86 @@
+﻿@model RegisterUserVM
+
+@{
+    ViewData["Title"] = "RegisterUser";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="col-8">
+
+        @if (ViewBag.Errors != null)
+        {
+            foreach (var error in ViewBag.Errors)
+            {
+                <div class="text-center bg-danger text-white" >
+                    @error
+                </div>
+            }
+        }
+
+        <form class="form-card" asp-action="RegisterUser" asp-controller="Auth">
+            <div class="">
+                <h3>Register User</h3>
+                <div class="text-end" style="color:#47b2e4">
+                    <a asp-action="RegisterTechnician" asp-controller="Auth"> Register as Technician</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" asp-for="@Model.FirstName" placeholder="Enter your first name">
+                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" asp-for="@Model.LastName" placeholder="Enter your last name">
+                    <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+
+                </div>
+
+            </div>
+
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" asp-for="@Model.Email" placeholder="Enter your email">
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Phone</label>
+                <input type="text" class="form-control" asp-for="@Model.PhoneNumber" placeholder="Enter your Phone">
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" asp-for="@Model.Password" placeholder="Enter your password">
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" asp-for="@Model.ConfirmPassword" placeholder="Confirm your password">
+                    <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+
+                </div>
+            </div>
+
+
+
+            <div class="text-end">
+                Have an Account?
+                <a asp-action="LogIn" asp-controller="Auth" style="color:#47b2e4">LogIn</a>
+            </div>
+            <button type="submit" class="main-btn">Register</button>
+
+        </form>
+    </div>
+   
+</div>
+

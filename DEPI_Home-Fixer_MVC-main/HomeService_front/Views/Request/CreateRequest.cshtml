@@ -1,0 +1,114 @@
+﻿@model CreateRequestVM
+@{
+    ViewData["Title"] = "CreateRequest";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+
+
+<div class="container py-5">
+    <main>
+        <div class="py-5 text-center">
+            <div class="section-title">
+                <h2>Request Service</h2>
+                <p class="lead">
+                    Below is a technician support request. You can fill out required
+                    fields. Each form field includes validation to ensure all
+                    necessary information is provided before submission, helping
+                    streamline the process of requesting technical assistance.
+                </p>
+            </div>
+        </div>
+        <div class="row g-5 mx-auto">
+            <div class="col-md-7 col-lg-8 mx-auto">
+                <h4 class="mb-3">Report an Issue</h4>
+                <form class="form-card" asp-action="CreateRequest" asp-controller="Request" novalidate enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div>
+                            <div class="mb-4 d-flex justify-content-start">
+                                <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                     alt="example placeholder" style="width: 300px;" />
+                            </div>
+                            <div class="d-flex justify-content-start">
+                                <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                    <label class="form-label text-white m-1" for="customFile1">Choose file</label>
+                                    <input type="file" class="form-control d-none" asp-for="@Model.Photos" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
+                                    <span asp-validation-for="@Model.Photos" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="Discribtion" class="form-label">description</label>
+                            <textarea id="w3review" asp-for="@Model.Description"
+                                   rows="5"   cols="50">
+                  </textarea>
+                            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="country" class="form-label">Category</label>
+                            <select class="form-select" asp-for="@Model.SpecializationId" asp-items="@ViewBag.Specializations" required>
+                                <option value="">-- Choose Specialization --</option>
+                            </select>
+                            <span asp-validation-for="@Model.SpecializationId" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="state" class="form-label">City</label>
+                            <select class="form-select" asp-for="@Model.CityId" asp-items="@ViewBag.Cities" required>
+                                <option value="">-- Choose City --</option>
+                            </select>
+                            <span asp-validation-for="@Model.CityId" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-9">
+                            <div class="form__group">
+                                <div class="form__gallery">
+                                    <label id="gallery1" for="form__gallery-upload">Other Photos</label>
+                                    <input data-name="#gallery1"
+                                           id="customFile1"
+                                           asp-for="@Model.Photos"
+                                           class="form__gallery-upload form-control"
+                                           type="file"
+                                           accept=".png, .jpg, .jpeg"
+                                           multiple />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    <button type="submit" class="main-btn">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2017–2021 Company Name</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Privacy</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+    </footer>
+</div>
+
+<script>
+    function displaySelectedImage(event, elementId) {
+        const selectedImage = document.getElementById(elementId);
+        const fileInput = event.target;
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                selectedImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+</script>

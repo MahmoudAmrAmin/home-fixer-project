@@ -1,0 +1,83 @@
+﻿@model PageData<TechnicianVM>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ClientLayout.cshtml";
+}
+
+<div class="container-fluid" style="margin-top:78px">
+    <div class="row flex-nowrap">
+        <div class="col">
+            <nav class="navbar" style="background-color: #37517e; height: 77px">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between w-100">
+
+                    
+                        <form asp-action="Index" asp-controller="Client" class="d-flex">
+                            <div class="form-group">
+                                <select name="orderByWorksDesc" class="form-control">
+                                    <option value="false">Works Ascending</option>
+                                    <option value="true">Works Descending</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select name="specializationId" asp-items="@ViewBag.Specializations" class="form-control">
+                                    <option value="">-- Select Specialization --</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="main-btn">Search</button>
+                        </form>
+                        <a class="" asp-action="Index" asp-controller="Client" type="submit">
+                            Clear
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            @if (Model.Data.Any())
+            {
+
+
+                <div class="container">
+                    <div class="row">
+                        @foreach (var technician in Model.Data)
+                        {
+                            <div class="col-sm-4 mb-3 mb-sm-0 py-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><strong>Technician Name: </strong> @(technician.FirstName + " " + technician.LastName)</h5>
+                                        <p class="card-text"><strong>Specialization Name: </strong>@technician.SpecializationName</p>
+                                        <p class="card-text"><strong>Total Works: </strong> @technician.FinishedWord</p>
+                                        <a asp-action="RequestTechnician" asp-controller="Technician" class="btn btn-primary" style="background:#47b2e4;border-color:#47b2e4">Request him</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center text-dark" role="alert">
+                    There is no any Technician in this Specialization!!
+                </div>
+            }
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    @for (var i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-controller="Client" asp-route-pageNo="@i">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+

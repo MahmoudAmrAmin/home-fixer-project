@@ -1,0 +1,67 @@
+﻿@model RequestVM
+@{
+    ViewData["Title"] = "RequestDetails";
+    Layout = "~/Views/Shared/_TechnicianLayout.cshtml";
+}
+
+<div class="container py-5">
+    <main>
+        <div class="py-5 text-center">
+            <div class="section-title">
+                <h2>Request Details</h2>
+            </div>
+        </div>
+        <div class="row g-5 mx-auto">
+            <div class="col-md-7 col-lg-8 mx-auto">
+                <form class="form-card" novalidate style="width: fit-content;">
+                    <div class="row g-3">
+                        <div class="col"><strong>Client Name:</strong> @Model.UserFullName</div>
+                        <div class="col-12">
+                            <label for="Discribtion" class="form-label"><strong>Description</strong> </label>
+                            <textarea id="w3review" cols="80" rows="6" readonly
+                                      asp-for="Description">
+</textarea>
+                        </div>
+
+                        <div class="col-md-6"><strong>City:</strong> @Model.CityName</div>
+                        <div class="col-md-6"><strong>Request Date:</strong> @FormatterHelper.GetFormatedDate(Model.RequestedAt)</div>
+                        <div><strong>images: </strong> </div>
+                    </div>
+                    @if (Model.Photos.Any())
+                    {
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="height: 550px; width: 319px;">
+                            <div class="carousel-inner">
+                                @for (int i = 0; i < Model.Photos.Count; i++)
+                                {
+                                    <div class="carousel-item @(i == 0? "active" : "")">
+                                        <img src="~/Images/@Model.Photos.ElementAt(i).PhotoUrl" class="d-block w-100" alt="...">
+                                    </div>
+                                }
+
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            there is no images
+                            </div>
+                    }
+
+                        <hr class="my-4" />
+                        <div class="d-flex justify-content-between mt-2">
+                        <a asp-action="SendOffer" asp-controller="Offer" asp-route-requestID="@Model.Id" class="main-btn" data-mdb-ripple-init>Send Offer</a>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
